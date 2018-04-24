@@ -1,4 +1,5 @@
 (ns troy-west.jmxtrans-clj
+  (:require [clojure.java.io :as io])
   (:import (com.googlecode.jmxtrans JmxTransformer)
            (com.googlecode.jmxtrans.cli JmxTransConfiguration)
            (com.googlecode.jmxtrans.guice JmxTransModule)
@@ -21,8 +22,8 @@
   (doto (JmxTransConfiguration.)
     (cond->
         continue-on-json-error (.setContinueOnJsonError continue-on-json-error)
-        process-config-dir     (.setProcessConfigDir process-config-dir)
-        process-config-file    (.setProcessConfigFile process-config-file)
+        process-config-dir     (.setProcessConfigDir (io/file process-config-dir))
+        process-config-file    (.setProcessConfigFile (io/file (io/resource process-config-file)))
         run-endlessly          (.setRunEndlessly run-endlessly)
         quartz-properties-file (.setQuartzPropertiesFile quartz-properties-file)
         run-period             (.setRunPeriod run-period)

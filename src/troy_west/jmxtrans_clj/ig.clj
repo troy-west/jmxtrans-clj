@@ -1,4 +1,4 @@
-(ns troy-west.jmxtrans-clj.integrant
+(ns troy-west.jmxtrans-clj.ig
   (:require [troy-west.jmxtrans-clj :as jmxtrans-clj]
             [integrant.core :as ig]))
 

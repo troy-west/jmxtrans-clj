@@ -1,4 +1,4 @@
-(defproject jmxtrans-clj "0.1.0-SNAPSHOT"
+(defproject com.troy-west/jmxtrans-clj "0.1.0-SNAPSHOT"
   :description "Clojure wrapper around jmxtrans."
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"
