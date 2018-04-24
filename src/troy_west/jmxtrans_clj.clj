@@ -19,25 +19,33 @@
            result-processor-executor-pool-size
            result-processor-executor-work-queue-capacity
            use-separate-executors]}]
-  (doto (JmxTransConfiguration.)
-    (cond->
-        continue-on-json-error (.setContinueOnJsonError continue-on-json-error)
-        process-config-dir     (.setProcessConfigDir (io/file process-config-dir))
-        process-config-file    (.setProcessConfigFile (io/file (io/resource process-config-file)))
-        run-endlessly          (.setRunEndlessly run-endlessly)
-        quartz-properties-file (.setQuartzPropertiesFile quartz-properties-file)
-        run-period             (.setRunPeriod run-period)
-        help                   (.setHelp help)
-        additional-jars        (.setAdditionalJars additional-jars)
-        query-processor-executor-pool-size
-        (.setQueryProcessorExecutorPoolSize query-processor-executor-pool-size)
-        query-processor-executor-work-queue-capacity
-        (.setQueryProcessorExecutorWorkQueueCapacity query-processor-executor-work-queue-capacity)
-        result-processor-executor-pool-size
-        (.setResultProcessorExecutorPoolSize result-processor-executor-pool-size)
-        result-processor-executor-work-queue-capacity
-        (.setResultProcessorExecutorWorkQueueCapacity result-processor-executor-work-queue-capacity)
-        use-separate-executors (.setUseSeparateExecutors use-separate-executors))))
+  (cond-> (JmxTransConfiguration.)
+    continue-on-json-error
+    (doto (.setContinueOnJsonError continue-on-json-error))
+    process-config-dir
+    (doto (.setProcessConfigDir (io/file process-config-dir)))
+    process-config-file
+    (doto (.setProcessConfigFile (io/file (io/resource process-config-file))))
+    run-endlessly
+    (doto (.setRunEndlessly run-endlessly))
+    quartz-properties-file
+    (doto (.setQuartzPropertiesFile quartz-properties-file))
+    run-period
+    (doto (.setRunPeriod run-period))
+    help
+    (doto (.setHelp help))
+    additional-jars
+    (doto (.setAdditionalJars additional-jars))
+    query-processor-executor-pool-size
+    (doto (.setQueryProcessorExecutorPoolSize query-processor-executor-pool-size))
+    query-processor-executor-work-queue-capacity
+    (doto (.setQueryProcessorExecutorWorkQueueCapacity query-processor-executor-work-queue-capacity))
+    result-processor-executor-pool-size
+    (doto (.setResultProcessorExecutorPoolSize result-processor-executor-pool-size))
+    result-processor-executor-work-queue-capacity
+    (doto (.setResultProcessorExecutorWorkQueueCapacity result-processor-executor-work-queue-capacity))
+    use-separate-executors
+    (doto (.setUseSeparateExecutors use-separate-executors))))
 
 (defn jmx-transformer
   [trans-config]
