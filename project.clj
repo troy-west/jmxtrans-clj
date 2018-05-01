@@ -5,4 +5,5 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.jmxtrans/jmxtrans "270"]
-                 [integrant "0.6.3"]])
+                 [integrant "0.6.3"]
+                 [cheshire "5.8.0"]])
