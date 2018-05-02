@@ -20,6 +20,10 @@ save_cache: &save_cache
 
 build: &build
   run: |
+    cd ~/project && make jar SNAPSHOTS_BUCKET=$SNAPSHOTS_BUCKET
+
+deploy: &deploy
+  run: |
     cd ~/project && make SNAPSHOTS_BUCKET=$SNAPSHOTS_BUCKET
 
 version: 2
@@ -32,6 +36,7 @@ jobs:
       - *restore_cache
       - *build
       - *save_cache
+      - *deploy
 
 workflows:
   version: 2
