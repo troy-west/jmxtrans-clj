@@ -1,0 +1,35 @@
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: circleci/clojure:lein-2.7.1
+
+restore_cache: &restore_cache
+  restore_cache:
+    key: project-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{checksum "project.clj" }}
+
+save_cache: &save_cache
+  save_cache:
+    paths:
+      - ~/.m2
+    key: project-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{checksum "project.clj" }}
+
+build: &build
+  run: |
+    cd ~/project && make SNAPSHOTS_BUCKET=$SNAPSHOTS_BUCKET
+
+version: 2
+jobs:
+  build:
+    <<: *defaults
+    steps:
+      - checkout
+      - *restore_cache
+      - *build
+      - *save_cache
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          context: troywest-aws
