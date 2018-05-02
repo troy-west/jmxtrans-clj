@@ -23,10 +23,12 @@ save_cache: &save_cache
 
 build: &build
   run: |
+    export PATH=$PATH:/home/circleci/.local/bin
     cd ~/project && make jar SNAPSHOTS_BUCKET=$SNAPSHOTS_BUCKET
 
 deploy: &deploy
   run: |
+    export PATH=$PATH:/home/circleci/.local/bin
     cd ~/project && make SNAPSHOTS_BUCKET=$SNAPSHOTS_BUCKET
 
 version: 2
