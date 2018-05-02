@@ -5,6 +5,9 @@ defaults: &defaults
 
 deps: &deps
   run: |
+    curl --silent --show-error --retry 5 https://bootstrap.pypa.io/get-pip.py | sudo python
+    pip install awscli --upgrade --user
+
     sudo apt-get update
     sudo apt-get install make
 
