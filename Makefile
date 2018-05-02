@@ -2,7 +2,7 @@ all: jar-maven
 
 .PHONY: jar
 jar: project.clj src/**/* resources/**/*
-	#lein -U do clean, deps, jar
+	lein -U do clean, deps, jar
 
 .PHONY: jar-maven
 jar-maven: jar
