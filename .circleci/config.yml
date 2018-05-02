@@ -3,6 +3,11 @@ defaults: &defaults
   docker:
     - image: circleci/clojure:lein-2.7.1
 
+deps: &deps
+  run: |
+    sudo apt-get update
+    sudo apt-get install make
+
 restore_cache: &restore_cache
   restore_cache:
     key: project-{{ .Environment.CIRCLE_PROJECT_REPONAME }}-{{checksum "project.clj" }}
@@ -23,6 +28,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
+      - *deps
       - *restore_cache
       - *build
       - *save_cache
