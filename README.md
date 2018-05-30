@@ -1,6 +1,3 @@
-# circleci
+# jmxtrans-clj
 
-context: troywest-aws
-SNAPSHOTS_BUCKET: <bucket>/<directory>
-
-Add AWS keys
+A Clojure wrapped around the jmxtrans project (https://github.com/jmxtrans/jmxtrans)
