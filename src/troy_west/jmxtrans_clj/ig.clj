@@ -9,13 +9,15 @@
                         jmxtrans-clj/jmxtrans-config
                         jmxtrans-clj/jmx-transformer)]
     (.start transformer)
+
+    (.invoke (doto (.getDeclaredMethod JmxTransformer "unregisterMBeans" (into-array Class []))
+               (.setAccessible true))
+             transformer
+             (into-array Object []))
+
     {:config      config
      :transformer transformer}))
 
 (defmethod ig/halt-key! :jmxtrans/transformer
   [_ {:keys [transformer]}]
-  (.invoke (doto (.getDeclaredMethod JmxTransformer "unregisterMBeans" (into-array Class []))
-             (.setAccessible true))
-           transformer
-           (into-array Object []))
   (.stop transformer))
