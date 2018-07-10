@@ -27,6 +27,4 @@
                   ["vcs" "commit"]
                   ["vcs" "push"]]
 
-  :aliases {"smoke" ["do" ["clean"] ["check"] ["test"] ["kibit"] ["cljfmt" "check"] ["eastwood"]]}
-
-  :pedantic? :abort)
+  :aliases {"smoke" ["do" ["clean"] ["check"] ["test"] ["kibit"] ["cljfmt" "check"] ["eastwood"]]})
