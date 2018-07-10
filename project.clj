@@ -4,10 +4,11 @@
   :url "https://github.com/troy-west/jmxtrans-clj"
 
   :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
+            :url  "http://www.eclipse.org/legal/epl-v20.html"}
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.jmxtrans/jmxtrans "270"]
+                 [org.jmxtrans/jmxtrans-core "270" :exclusions [com.google.inject/guice]]
+                 [com.google.inject/guice "4.1.0" :scope "runtime"]
                  [integrant "0.6.3"]
                  [cheshire "5.8.0"]]
 
@@ -20,4 +21,6 @@
                   ["deploy"]
                   ["change" "version" "leiningen.release/bump-version"]
                   ["vcs" "commit"]
-                  ["vcs" "push"]])
+                  ["vcs" "push"]]
+
+  :pedantic? :abort)

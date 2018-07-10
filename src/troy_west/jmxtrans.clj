@@ -1,20 +1,18 @@
-(ns troy-west.jmxtrans-clj
+(ns troy-west.jmxtrans
   (:require [clojure.java.io :as io]
-            [cheshire.core :as cheshire])
-  (:import (com.googlecode.jmxtrans JmxTransformer)
+            [cheshire.core :as json]
+            [integrant.core :as ig])
+  (:import (java.io File)
+           (com.googlecode.jmxtrans JmxTransformer)
            (com.googlecode.jmxtrans.cli JmxTransConfiguration)
            (com.googlecode.jmxtrans.guice JmxTransModule)
-           (com.googlecode.jmxtrans.classloader ClassLoaderEnricher)
-           (java.io File)))
+           (com.googlecode.jmxtrans.classloader ClassLoaderEnricher)))
 
 (defn gen-temp-config
   [queries]
-  (let [config-file (File/createTempFile
-                     "jmxtrans-config"
-                     ".json"
-                     (io/file (System/getProperty "java.io.tmpdir")))]
-    (spit config-file
-          (cheshire/generate-string queries {:pretty true}))
+  (let [temp-dir    (io/file (System/getProperty "java.io.tmpdir"))
+        config-file (File/createTempFile "jmxtrans-config" ".json" temp-dir)]
+    (spit config-file (json/encode queries {:pretty true}))
     config-file))
 
 (defn jmxtrans-config
@@ -69,8 +67,20 @@
   [trans-config]
   (let [enricher (ClassLoaderEnricher.)]
     (doseq [jar (.getAdditionalJars trans-config)]
-      (.add enricher jar))
+      (.add enricher ^File jar)))
+  (.getInstance (JmxTransModule/createInjector trans-config) ^Class JmxTransformer))
 
-    (-> trans-config
-        JmxTransModule/createInjector
-        (.getInstance JmxTransformer))))
+(defmethod ig/init-key :jmxtrans/transformer
+  [_ config]
+  (let [transformer (jmx-transformer (jmxtrans-config config))]
+    (.start transformer)
+    {:config      config
+     :transformer transformer}))
+
+(defmethod ig/halt-key! :jmxtrans/transformer
+  [_ {:keys [transformer]}]
+  (.invoke (doto (.getDeclaredMethod JmxTransformer "unregisterMBeans" (into-array Class []))
+             (.setAccessible true))
+           transformer
+           (into-array Object []))
+  (.stop transformer))
