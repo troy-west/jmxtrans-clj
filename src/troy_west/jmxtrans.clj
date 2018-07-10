@@ -66,14 +66,14 @@
 (defn jmx-transformer
   [trans-config]
   (let [enricher (ClassLoaderEnricher.)]
-    (doseq [jar (.getAdditionalJars trans-config)]
+    (doseq [jar (.getAdditionalJars ^JmxTransConfiguration trans-config)]
       (.add enricher ^File jar)))
   (.getInstance (JmxTransModule/createInjector trans-config) ^Class JmxTransformer))
 
 (defmethod ig/init-key :jmxtrans/transformer
   [_ config]
   (let [transformer (jmx-transformer (jmxtrans-config config))]
-    (.start transformer)
+    (.start ^JmxTransformer transformer)
     {:config      config
      :transformer transformer}))
 
@@ -83,4 +83,4 @@
              (.setAccessible true))
            transformer
            (into-array Object []))
-  (.stop transformer))
+  (.stop ^JmxTransformer transformer))
