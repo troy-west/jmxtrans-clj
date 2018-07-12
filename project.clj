@@ -1,4 +1,4 @@
-(defproject com.troy-west/jmxtrans-clj "0.1.2"
+(defproject com.troy-west/jmxtrans-clj "0.1.3-SNAPSHOT"
   :description "Clojure wrapper around jmxtrans"
 
   :url "https://github.com/troy-west/jmxtrans-clj"
