@@ -11,7 +11,8 @@
             [lein-kibit "0.1.6" :exclusions [org.clojure/clojure org.clojure/tools.reader]]]
 
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.jmxtrans/jmxtrans-core "270" :exclusions [com.google.inject/guice]]
+                 [org.jmxtrans/jmxtrans-core "270" :exclusions [com.google.inject/guice com.google.guava/guava]]
+                 [com.google.guava/guava "22.0"]
                  [com.google.inject/guice "4.1.0"]
                  [integrant "0.6.3"]
                  [cheshire "5.8.0"]]
