@@ -70,14 +70,14 @@
       (.add enricher ^File jar)))
   (.getInstance (JmxTransModule/createInjector trans-config) ^Class JmxTransformer))
 
-(defmethod ig/init-key :jmxtrans/transformer
+(defmethod ig/init-key :jmx/transformer
   [_ config]
   (let [transformer (jmx-transformer (jmxtrans-config config))]
     (.start ^JmxTransformer transformer)
     {:config      config
      :transformer transformer}))
 
-(defmethod ig/halt-key! :jmxtrans/transformer
+(defmethod ig/halt-key! :jmx/transformer
   [_ {:keys [transformer]}]
   (.invoke (doto (.getDeclaredMethod JmxTransformer "unregisterMBeans" (into-array Class []))
              (.setAccessible true))
